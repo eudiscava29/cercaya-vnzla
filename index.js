@@ -150,7 +150,7 @@ app.get('/citizen-dashboard', (req, res) => {
         <h2 class="text-xl font-extrabold text-rose-600 mb-2">⚠️ Cuenta Bloqueada</h2>
         <p class="text-xs text-slate-600 mb-2">Tu periodo de prueba de 14 días o mes activo ha vencido.</p>
         <p class="text-[11px] font-bold text-slate-500 mb-4">ID de Cuenta: <span class="text-rose-600">${user.account_id}</span></p>
-        <a href="https://wa.me/584120000000?text=${waMsg}" target="_blank" class="block w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl shadow-md transition mb-3">
+        <a href="https://wa.me/584167455485?text=${waMsg}" target="_blank" class="block w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl shadow-md transition mb-3">
           📲 Enviar Comprobante al WhatsApp de Admin
         </a>
         <a href="/login" class="text-xs text-slate-500 hover:underline">Cerrar sesión</a>
@@ -496,7 +496,7 @@ app.get('/dashboard', (req, res) => {
         <h2 class="text-xl font-extrabold text-rose-600 mb-2">⚠️ Cuenta Bloqueada</h2>
         <p class="text-xs text-slate-600 mb-2">Tu periodo de prueba o mes activo ha vencido.</p>
         <p class="text-[11px] font-bold text-slate-500 mb-4">ID de Cuenta: <span class="text-rose-600">${business.account_id}</span></p>
-        <a href="https://wa.me/584120000000?text=${waMsg}" target="_blank" class="block w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl shadow-md transition mb-3">
+        <a href="https://wa.me/584167455485?text=${waMsg}" target="_blank" class="block w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl shadow-md transition mb-3">
           📲 Enviar Comprobante al WhatsApp de Admin
         </a>
         <a href="/login" class="text-xs text-slate-500 hover:underline">Cerrar sesión</a>
