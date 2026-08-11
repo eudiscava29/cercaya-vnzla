@@ -1,16 +1,13 @@
 {
-  "name": "cercaya-venezla",
+  "name": "cercaya",
   "version": "1.0.0",
-  "description": "Comparador de precios inteligente y local en Venezuela",
+  "description": "Comparador de precios inteligente",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "pg": "^8.11.3"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "@libsql/client": "^0.14.0",
+    "express": "^4.19.2"
   }
 }
