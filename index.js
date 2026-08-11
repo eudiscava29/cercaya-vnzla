@@ -5,14 +5,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Conexión segura por objeto para evitar bloqueos de red en Render
+// Conexión forzada a IPv4 para saltarse el bloqueo de red de Render
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  host: 'db.swzgcgrjtdabllbzzof.supabase.co',
+  database: 'postgres',
+  user: 'postgres',
+  password: 'qKoJ5Oo41efNKCf3',
+  port: 5432,
   ssl: {
     rejectUnauthorized: false
   },
-  keepAlive: true,
-  connectionTimeoutMillis: 10000,
+  family: 4 // Esto fuerza absolutamente el protocolo IPv4
 });
 
 async function conectarDB() {
