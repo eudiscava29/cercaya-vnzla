@@ -6,7 +6,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Conexión a MongoDB Atlas (puedes reemplazar esta URL con tu cadena de conexión oficial de Atlas)
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://eudiscava29_db_user:cXkxi2LnMEq6Wfzq@cluster0.19tell3.mongodb.net/?appName=Cluster0";
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  console.error("¡ERROR: La variable MONGO_URI no está configurada en Render!");
+  process.exit(1);
+}
 let db;
 
 async function conectarDB() {
