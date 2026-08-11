@@ -10,7 +10,8 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
-  }
+  },
+  family: 4 // <- Esto fuerza la conexión por IPv4 y evita el error de red
 });
 
 async function conectarDB() {
