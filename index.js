@@ -764,7 +764,7 @@ Adjunto mi comprobante de pago de la mensualidad para la reactivación:`);
 
 // ==================== PANEL ADMIN PRIVADO ====================
 app.get('/admin', async (req, res) => {
-  if (!adminLoggedIn) {
+  if (!isAdmin(req)) {
     return res.send(tailwindLayout('Login Admin', `
       <div class="max-w-md mx-auto bg-white rounded-3xl p-6 shadow-sm border mt-10 space-y-4">
         <div class="flex items-center">
