@@ -594,6 +594,10 @@ app.post('/api/register', async (req, res) => {
   res.redirect('/login');
 });
 
+app.get('/api/register', (req, res) => {
+  res.redirect('/register');
+});
+
 // ==================== LOGIN ====================
 app.get('/login', (req, res) => {
   res.send(tailwindLayout('Login', `
