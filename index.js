@@ -924,7 +924,7 @@ app.get('/api/admin/unlock-user', async (req, res) => {
 });
 
 app.get('/api/admin/clear-sandbox', async (req, res) => {
-  if (adminLoggedIn && isSandboxActive(req)) {
+  if (isAdmin(req) && isSandboxActive(req)) {
     await pool.query('DELETE FROM users', [], req);
     await pool.query('DELETE FROM businesses', [], req);
     await pool.query('DELETE FROM products', [], req);
@@ -933,7 +933,6 @@ app.get('/api/admin/clear-sandbox', async (req, res) => {
 });
 
 app.get('/api/admin/logout', (req, res) => {
-  adminLoggedIn = false;
   res.setHeader('Set-Cookie', 'cercaya_sandbox=false; Path=/; HttpOnly');
   res.redirect('/admin');
 });
