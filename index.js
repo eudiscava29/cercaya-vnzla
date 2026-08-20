@@ -886,8 +886,7 @@ app.get('/admin', async (req, res) => {
 app.post('/api/admin/login', (req, res) => {
   const { username, password } = req.body;
   if (username === 'Eudis' && password === 'mercy123') {
-    adminLoggedIn = true;
-    res.setHeader('Set-Cookie', 'cercaya_sandbox=true; Path=/; HttpOnly');
+    res.setHeader('Set-Cookie', 'admin_session=true; Path=/; HttpOnly');
     return res.redirect('/admin');
   }
   res.send("<h3>Credenciales incorrectas. <a href='/admin'>Volver</a></h3>");
