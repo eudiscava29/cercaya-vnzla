@@ -21,6 +21,10 @@ function isSandboxActive(req) {
   const cookies = parseCookies(req);
   return cookies.cercaya_sandbox === 'true';
 }
+function isAdmin(req) {
+  const cookies = parseCookies(req);
+  return cookies.admin_session === 'true';
+}
 
 const d1Client = {
   async execute(sql, params = [], isSandbox = false) {
