@@ -574,7 +574,7 @@ app.post('/api/register', async (req, res) => {
 
   await pool.query(
     `INSERT INTO users (account_id, email, password, full_name, phone, role, status, expires_at, sec_question, sec_answer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    ['CY-' + Math.floor(1000 + Math.random() * 9000), email, password, full_name, phone, parseInt(plan_id) === 1 ? 'user' : 'merchant', 'pre-launch', 'PENDING', sec_question, sec_answer],
+    ['CY-' + Math.floor(1000 + Math.random() * 9000), email, password, full_name, phone, parseInt(plan_id) === 1 ? 'user' : 'merchant', 'pre-launch', '2000-01-01', sec_question, sec_answer],
     req
   );
   
@@ -584,7 +584,7 @@ app.post('/api/register', async (req, res) => {
   if (parseInt(plan_id) !== 1 && business_name) {
     await pool.query(
       `INSERT INTO businesses (account_id, user_id, name, owner_name, category, reference, lat_lng, phone, plan_id, bcv_rate, status, expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [user.account_id, user.id, business_name, full_name, category || 'Otros', reference || 'Céntrico', lat_lng || '10.2241,-67.5871', phone, parseInt(plan_id), 36.50, 'pre-launch', 'PENDING'],
+      [user.account_id, user.id, business_name, full_name, category || 'Otros', reference || 'Céntrico', lat_lng || '10.2241,-67.5871', phone, parseInt(plan_id), 36.50, 'pre-launch', '2000-01-01'],
       req
     );
   }
