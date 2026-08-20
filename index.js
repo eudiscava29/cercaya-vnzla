@@ -893,7 +893,7 @@ app.post('/api/admin/login', (req, res) => {
 });
 
 app.post('/api/admin/toggle-env', (req, res) => {
-  if (adminLoggedIn) {
+  if (isAdmin(req)) {
     const sandboxActive = isSandboxActive(req);
     const newState = !sandboxActive;
     res.setHeader('Set-Cookie', `cercaya_sandbox=${newState}; Path=/; HttpOnly`);
@@ -902,7 +902,7 @@ app.post('/api/admin/toggle-env', (req, res) => {
 });
 
 app.get('/api/admin/start-grand-opening', async (req, res) => {
-  if (adminLoggedIn) {
+  if (isAdmin(req)) {
     const finTrial = new Date();
     finTrial.setDate(finTrial.getDate() + 14); // 14 días a partir de hoy
     await pool.query("UPDATE users SET status = 'trialing', expires_at = ? WHERE status = 'pre-launch'", [finTrial.toISOString()], req);
@@ -911,7 +911,7 @@ app.get('/api/admin/start-grand-opening', async (req, res) => {
 });
 
 app.get('/api/admin/unlock-user', async (req, res) => {
-  if (adminLoggedIn) {
+  if (isAdmin(req)) {
     const userId = req.query.id;
     const tab = req.query.tab || 'merchant';
     const nuevaFecha = new Date();
@@ -939,7 +939,7 @@ app.get('/api/admin/logout', (req, res) => {
 });
 
 app.post('/api/admin/user/edit', async (req, res) => {
-  if (adminLoggedIn) {
+  if (isAdmin(req)) {
     const { user_id, full_name, phone, tab } = req.body;
     await pool.query('UPDATE users SET full_name = ?, phone = ? WHERE id = ?', [full_name, phone, user_id], req);
     return res.redirect(`/admin?tab=${tab || 'citizen'}`);
@@ -948,7 +948,7 @@ app.post('/api/admin/user/edit', async (req, res) => {
 });
 
 app.get('/api/admin/user/delete', async (req, res) => {
-  if (adminLoggedIn) {
+  if (isAdmin(req)) {
     const userId = req.query.id;
     const tab = req.query.tab || 'citizen';
     await pool.query('DELETE FROM users WHERE id = ?', [userId], req);
