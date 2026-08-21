@@ -576,27 +576,33 @@ app.post('/api/register', async (req, res) => {
   try {
     const { email, password, full_name, phone, plan_id, business_name, category, reference, lat_lng, sec_question, sec_answer } = req.body;
 
+    const accountId = 'CY-' + Math.floor(1000 + Math.random() * 9000);
+
+    // 1. Insertar el usuario de forma segura
     await pool.query(
       `INSERT INTO users (account_id, email, password, full_name, phone, role, status, expires_at, sec_question, sec_answer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      ['CY-' + Math.floor(1000 + Math.random() * 9000), email, password, full_name, phone, parseInt(plan_id) === 1 ? 'user' : 'merchant', 'pre-launch', '2000-01-01', sec_question, sec_answer],
+      [accountId, email, password, full_name, phone, parseInt(plan_id) === 1 ? 'user' : 'merchant', 'pre-launch', '2000-01-01', sec_question, sec_answer],
       req
     );
 
-    const userRes = await pool.query('SELECT id, account_id FROM users WHERE email = ?', [email], req);
-    const user = userRes.rows[0];
-
+    // 2. Si eligió un plan de comercio y puso nombre de negocio, insertamos el negocio usando el accountId directo
     if (parseInt(plan_id) !== 1 && business_name) {
+      // Obtenemos el ID del usuario recién creado de forma segura
+      const userRes = await pool.query('SELECT id FROM users WHERE email = ?', [email], req);
+      const userId = userRes.rows && userRes.rows[0] ? userRes.rows[0].id : 1;
+
       await pool.query(
         `INSERT INTO businesses (account_id, user_id, name, owner, category, reference, lat_lng, phone, plan_id, price, status, expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [user.account_id, user.id, business_name, full_name, category || 'Otros', reference || 'Céntrico', lat_lng || '10.2241,-67.5871', phone, parseInt(plan_id), 36.50, 'pre-launch', '2000-01-01'],
+        [accountId, userId, business_name, full_name, category || 'Otros', reference || 'Céntrico', lat_lng || '10.2241,-67.5871', phone, parseInt(plan_id), 36.50, 'pre-launch', '2000-01-01'],
         req
       );
     }
 
-    res.redirect('/login');
+    // 3. Redirección limpia al login sin errores
+    return res.redirect('/login');
   } catch (error) {
-    console.error("Error en registro:", error);
-    res.status(500).send("Hubo un error al procesar el registro (es posible que el correo ya esté en uso). <a href='/register'>Volver</a>");
+    console.error("Error detallado en registro:", error);
+    return res.status(500).send("Hubo un error al procesar el registro. <a href='/register'>Volver</a>");
   }
 });
     
